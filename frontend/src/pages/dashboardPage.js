@@ -2,17 +2,20 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthData } from '../hooks/useAuthData';
 import { useLogout } from '../hooks/useLogout';
+
 const Dashboard = () => {
     const navigate = useNavigate();
-    const { getAuthData, authError, authChecked } = useAuthData();
+    const { getAuthData } = useAuthData();
     const { logout } = useLogout();
 
-
     useEffect(() => {
-        if (authChecked && authError) {
+        try {
+            getAuthData();
+        } catch (error) {
+            console.error('User is not authenticated');
             navigate('/login');
         }
-    }, [authChecked, authError, navigate]);
+    }, [getAuthData, navigate]);
 
     const handleNavigate = (route) => {
         navigate(route);

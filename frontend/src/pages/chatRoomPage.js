@@ -20,6 +20,7 @@ const ChatRoom = () => {
     usePolling(fetchMessages);
 
     const handleLogout = useCallback(() => {
+        // Remove authentication data from storage
         ['token', 'identifier'].forEach(key => {
             localStorage.removeItem(key);
             sessionStorage.removeItem(key);
@@ -30,23 +31,31 @@ const ChatRoom = () => {
     // Initialize component and fetch messages
     useEffect(() => {
         try {
-            fetchMessages();
+            // Attempt to fetch messages
+            getAuthData();  // If no auth data, this will throw an error
+            fetchMessages(); // Fetch messages if authenticated
         } catch (error) {
+            // If authentication fails or error occurs, redirect to login
+            console.error('Authentication failed or error occurred:', error);
             navigate('/login');
         }
     }, [getAuthData, navigate, fetchMessages]);
 
     useEffect(() => {
         if (messages.length > 0) {
+            // Scroll to the bottom when new messages arrive
             messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
         }
     }, [messages]);
 
     const handleSendMessage = useCallback(() => {
-        sendMessage(newMessage);
-        setNewMessage('');
+        if (newMessage.trim()) {
+            sendMessage(newMessage);
+            setNewMessage('');
+        }
     }, [newMessage, sendMessage]);
 
+    // Show loading state while data is being fetched
     if (isLoading) {
         return <div className="flex justify-center items-center h-screen">Loading...</div>;
     }

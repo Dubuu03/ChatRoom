@@ -5,7 +5,7 @@ export const useAuthData = () => {
         const token = localStorage.getItem('token') || sessionStorage.getItem('token');
         const identifier = localStorage.getItem('identifier') || sessionStorage.getItem('identifier');
 
-        if (!token && !identifier) {
+        if (!token || !identifier) {
             throw new Error('Authentication data missing');
         }
         return { token, identifier };
