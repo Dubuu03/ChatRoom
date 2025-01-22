@@ -5,6 +5,9 @@ const cors = require('cors');
 const connectDB = require('./config/db'); // Import the database connection
 const authRoutes = require('./routes/authRoutes'); // Import the auth routes
 const messageRoutes = require('./routes/messageRoutes'); // Import the message routes
+const userRoutes = require('./routes/userRoutes'); // Import the user routes
+const { MongoClient } = require('mongodb');
+const WebSocket = require('ws');
 
 const app = express();
 
@@ -18,6 +21,7 @@ connectDB();
 // Routes
 app.use('/api/auth', authRoutes); // Authentication routes
 app.use('/api', messageRoutes);
+app.use('/api', userRoutes);
 // Root route for testing
 app.get('/', (req, res) => {
     res.send('Authentication API is running');

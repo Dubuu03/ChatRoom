@@ -1,8 +1,8 @@
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import './App.css';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from './pages/logInPage';
 import Register from './pages/registerPage';
 import ChatRoom from './pages/chatRoomPage';
+import Dashboard from './pages/dashboardPage';
 
 function App() {
   return (
@@ -13,6 +13,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/chat" element={<ChatRoom />} />
+          <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </div>
     </Router>

@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useCallback } from 'react';
 
 export const useAuthData = () => {
     const getAuthData = useCallback(() => {
@@ -8,7 +8,6 @@ export const useAuthData = () => {
         if (!token && !identifier) {
             throw new Error('Authentication data missing');
         }
-
         return { token, identifier };
     }, []);
 
